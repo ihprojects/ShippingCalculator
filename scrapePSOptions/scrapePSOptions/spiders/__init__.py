@@ -29,12 +29,9 @@ class OptionsSpider(scrapy.Spider):
             yield{
                 
                 # 'option_name': option.xpath('.//b').extract_first()   #use . to limit scope to option selector
-                # 'option_name': option.xpath('.//td[1]/p[1]/b/text()').get()
-                'counter:' :counter,
+               
                 'option_name': option.xpath('.//text()').get()
                 ,'option_limits': option.xpath(f'//tr[{counter+1}]/td[1]/p[2]/text()').get()
-                # ,'option_price': option.xpath('.//td[2]/p/a/b/b/span/text()').get()
-                #,'limits' : option.xpath('.//td/p/b').extract_first()
                 ,'option_price': option.xpath(f'(//span[@class="text-primary"])[{counter}]/text()').get()
                 
             }
