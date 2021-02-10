@@ -28,6 +28,7 @@ class OptionsSpider(scrapy.Spider):
             
             yield{
                 
+                
                 # 'option_name': option.xpath('.//b').extract_first()   #use . to limit scope to option selector
                
                 'option_name': option.xpath('.//text()').get()
@@ -53,7 +54,7 @@ class HermesSpider(scrapy.Spider):
     ]
     #st looks like this:"Längste + kürzeste Seite bis 37 cm", " max. 25 kg", " bis 50 € Haftung\t\t\n\t</td>"
     def splitstr(self,name,st,price):
-        st = st.split('<br>')[1].split('kg')split(' ') 
+        st = st.split('<br>')[1].split(',') 
         values =[]
         values.append(name)
         for i in range(len(st)):
@@ -139,7 +140,5 @@ class HermesSpider(scrapy.Spider):
 'calc_style': 'sum_sides','name': 'Hermes', 'delivery_time': 3}
 
 {"options": [
-    ["Hermes Päckchen", [37], 25, 4.5, 1000], ["S-Paket", [37], 25, 5.55, 1000]
-    , ["M-Paket", [37], 25, 6.85, 1000], ["L-Paket", [37], 25, 11.95, 1000]
-    , ["XL-Paket (inkl. Abholung)", [37], 25, 1000], ["XXL-Paket (inkl. Abholung)"
-    , [37], 25, 1000]]}
+["Hermes Päckchen", [37], 25.0, 50.0, 4.5, 1000], ["S-Paket", [37], 25.0, 50.0, 5.55, 1000], ["M-Paket", [37], 25.0, 50.0, 6.85, 1000], ["L-Paket", [37], 25.0, 50.0, 11.95, 1000]
+, ["XL-Paket (inkl. Abholung)", [37], 25.0, 50.0, 1000], ["XXL-Paket (inkl. Abholung)", [37], 25.0, 50.0, 1000]]
