@@ -33,6 +33,7 @@ Scrapy install notes
 1. create venv:
 python -m venv name
 2.activate in scripts
+./activate
 3. try install scrapy:
 pip install scrapy
 if error installing twisted:
@@ -46,7 +47,7 @@ pip freeze > requirements.txt
 5.change to folder and run:
 scrapy startproject tutorial
 6.get data:
-scrapy crawl options -o data.json
+scrapy crawl DHL -o data.json
 
 
 

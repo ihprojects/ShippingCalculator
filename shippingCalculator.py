@@ -126,6 +126,9 @@ while True:
         for i in parcel_services:
             print(f'{"".join([i.name,":"]):10}{i.calc_delivery()}')
 
+    if inp == 'gui':
+        show_gui()
+        
     print('\n\n')
     draw_line()
 
