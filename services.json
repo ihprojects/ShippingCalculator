@@ -1,0 +1,27 @@
+[
+{ "options": [
+["Päckchen S", [35,25,10], 2, 3.79, 1000], 
+["Päckchen M",[60,30,15], 2, 4.39, 1000],
+["Paket S", [60,30,15], 2, 4.99, 1000], 
+["Paket M", [120,60,60], 5, 5.99, 300],
+["Paket L", [120,60,60], 5, 6.49, 1000], 
+["Paket XL", [120,60,60], 5, 6.99, 1000]],
+"calc_style": "check_sides",
+"name": "DHL", 
+"delivery_time": 3},
+{ "options": [
+["Paket HP", [37], 2, 4.99, 1000], 
+["Paket S", [50], 5, 5.99, 1000],
+["Paket M", [80], 5, 6.49, 1000], 
+["Paket L", [120], 5, 6.99, 1000]],
+"calc_style": "check_sum",
+"name": "Hermes", 
+"delivery_time": 4},
+{ "options": [
+["Paket XS", [35], 1000, 3.90, 1000], 
+["Paket S", [50], 1000, 4.20, 1000],
+["Paket M", [70], 1000, 6.60, 1000]],
+"calc_style": "check_sum",
+"name": "DPD", 
+"delivery_time": 3}
+]

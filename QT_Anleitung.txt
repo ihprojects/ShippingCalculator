@@ -1,0 +1,219 @@
+unterfenster display_pricelist.ui
+*******************************
+object name: display_pricelist
+
+Überschrift:
+label: pricelist_label_headline
+
+OK-Button:
+name: pricelist_button_Box
+
+Table Widget:
+name: pricelist_tableview
+
+
+
+
+DHL
+=========================================
+Päcken S    | Päckchen M | evtl weitere Spalten?
+2 kg        | 2 kg       | 
+35x25x10 cm | 50x30x25   | 
+
+DPD
+=========================================
+XS          | S          | M
+no limit    | no limit   | no limit
+35 cm       | 50 cm      | 70 cm
+3,90 €      | 4,20 €     | 6,60 €
+
+
+
+
+# Beispielhaft die ersten zeilen:
+        self.tableWidget.setItem(0,0, QTableWidgetItem("DHL"))
+        self.tableWidget.setItem(1,0, QTableWidgetItem("========="))
+        self.tableWidget.setItem(2,0, QTableWidgetItem("Päckchen S"))
+        self.tableWidget.setItem(2,1, QTableWidgetItem("Päckchen M"))
+        self.tableWidget.setItem(2,2, QTableWidgetItem("Päckchen evtl mehr"))
+
+        self.tableWidget.setItem(3,0, QTableWidgetItem("2 kg"))
+        self.tableWidget.setItem(3,1, QTableWidgetItem("2 kg"))
+
+
+        self.tableWidget.setItem(4,0, QTableWidgetItem("35x25x10 cm "))
+        self.tableWidget.setItem(4,1, QTableWidgetItem("50x30x25 cm"))
+
+
+
+
+        self.tableWidget.setItem(0,3, QTableWidgetItem("voraussichtliches Lieferdatum"))
+
+
+        self.tableWidget.setItem(1,0, QTableWidgetItem("Cell (2,1)"))
+        self.tableWidget.setItem(1,1, QTableWidgetItem("Cell (2,2)"))
+        self.tableWidget.setItem(2,0, QTableWidgetItem("Cell (3,1)"))
+        self.tableWidget.setItem(2,1, QTableWidgetItem("Cell (3,2)"))
+        self.tableWidget.setItem(3,0, QTableWidgetItem("Cell (4,1)"))
+        self.tableWidget.setItem(3,1, QTableWidgetItem("Cell (4,2)"))
+
+
+****************************************************************************************
+unterfenster display_prices.ui
+*******************************
+
+
+modales Fenster! 
+nicht verkleinerbar
+
+
+Überschrift:
+name= label_headline
+
+
+L:
+label_display_length
+display_lenght
+
+B:
+label_display_width
+display_width
+
+H:
+label_display_height
+display_height
+
+kg:
+label_display_weight
+display_weight
+
+
+
+
+*************************************
+*************************************
+Anleitung zur Qt Tqbelle:
+https://pythonspot.com/pyqt5-table/
+
+------------------
+Tabelle:
+name: tableWidget
+
+
+Um die Tabelle zu füllen:
+4 Spalten:
+Anbieter, Produkt, Preis, voraussichtl. Lieferdatum
+
+
+def createTable(self):
+       # Create table
+        self.tableWidget = QTableWidget()
+        self.tableWidget.setRowCount(4)                                 # Zeilenzahl = anzahl Anbieter + überschrift
+        self.tableWidget.setColumnCount(4)                              # sollten fest 4 Spalten sein
+
+    # Überschrift (erste Zeile row0
+        self.tableWidget.setItem(0,0, QTableWidgetItem("Anbieter"))
+        self.tableWidget.setItem(0,1, QTableWidgetItem("Produkt"))
+        self.tableWidget.setItem(0,2, QTableWidgetItem("Preis"))
+        self.tableWidget.setItem(0,3, QTableWidgetItem("voraussichtliches Lieferdatum"))
+
+
+        self.tableWidget.setItem(1,0, QTableWidgetItem("Cell (2,1)"))
+        self.tableWidget.setItem(1,1, QTableWidgetItem("Cell (2,2)"))
+        self.tableWidget.setItem(2,0, QTableWidgetItem("Cell (3,1)"))
+        self.tableWidget.setItem(2,1, QTableWidgetItem("Cell (3,2)"))
+        self.tableWidget.setItem(3,0, QTableWidgetItem("Cell (4,1)"))
+        self.tableWidget.setItem(3,1, QTableWidgetItem("Cell (4,2)"))
+        self.tableWidget.move(0,0)
+
+        # table selection change
+        self.tableWidget.doubleClicked.connect(self.on_click)
+
+
+
+
+
+
+
+**************************
+Importe:
+
+import sys
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.uic import *
+from PyQt5.QtWidgets import *
+from shippingCalculator import *
+
+app = QApplication(sys.argv)                # 
+w = loadUi("vk_rechner_main.ui")            # Laden des Hauptfenster (main)
+
+w.show()                                    # Anzeige des Fensters
+sys.exit(app.exec_())                       # Applikation starten
+
+
+
+
+Versanddatum auf Tagesdatum setzen:
+***********************************
+ 
+        # date time 
+        d = QDateTime(2020, 10, 10, 10, 20) 
+  
+        # setting date time 
+        dateEdit_delDate.setDateTime(d) 
+
+
+
+Menü-Einträge:
+**************
+Preis berechnen:            menuPreis_berechnen
+Preisliste                  menuPreisliste
+Preis ...
+    - auf Updates prüfen    actionAuf_Updatestes_pruefen
+    - Aktualisieren         actionAktualisieren
+
+Alternativen anzeigen       menuAlternativen_anzeigen 
+
+
+Eingabefelder:
+**************
+
+Länge       inp_length
+Breite      inp_width
+Höhe        inp_height
+Gewicht     inp_weight
+
+
+Checkboxen:
+***********
+DHL         checkBox_dhl
+Hermes      checkBox_hermes
+DPD         checkBox_hermes
+
+Versicherung    checkBox_insurance
+Expressversand  checkBox_express
+
+Datum:
+******
+gewünschtes Lieferdatum     dateEdit_delDate
+
+
+Buttons:
+********
+Preis berechnen     but_calculate
+w.connect(w.but_calculate, SIGNAL("clicked()"), FUNKTIONSAUFRUF_ohne_Klammern)
+
+Preisliste          but_pricelist
+w.connect(w.but_pricelist, SIGNAL("clicked()"), FUNKTIONSAUFRUF_ohne_Klammern)
+
+Alternativen        but_alternate
+w.connect(w.but_alternate, SIGNAL("clicked()"), FUNKTIONSAUFRUF_ohne_Klammern)
+
+Beenden             but_close
+w.connect(w.but_close, SIGNAL("clicked()"),show_help)
+
+
+
+
+

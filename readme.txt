@@ -29,4 +29,26 @@ GLS	€ 4,30 / 4,90 / 9,90
 Hermes	€ 4,30 (Päckchen) / 4,95 / 5,95
 UPS.de	€ 6,55 / 8,33 / 17,85
 
+Scrapy install notes
+1. create venv:
+python -m venv name
+2.activate in scripts
+./activate
+3. try install scrapy:
+pip install scrapy
+if error installing twisted:
+1.download twisted whl
+pip install yourwhlfile
+pip install scrapy
+
+4.get requirements:
+pip freeze > requirements.txt
+
+5.change to folder and run:
+scrapy startproject tutorial
+6.get data:
+scrapy crawl DHL -o data.json
+
+
+
 """
