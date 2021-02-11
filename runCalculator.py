@@ -1,6 +1,6 @@
 import sys
 import json
-
+import PyQt5
 from decimal import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -10,7 +10,8 @@ from datetime import datetime, date
 
 from parcelServiceOption import ParcelService, ParcelOption, Parcel
 from json_reader import get_newest, read_file, create_info_list
-#from web2json import crawl
+from web2json import crawl
+import prices as p
 
 SERVICES_FILE = "data.jsonl"
 
@@ -25,6 +26,7 @@ def get_available_services():
 
 def update_services():
     crawl()
+    get_available_services()
 
 def calculate():
     dd = w.dateEdit_delDate.date().toPyDate()
@@ -68,7 +70,7 @@ def show_best_options(parcel):
     item = QTableWidgetItem()
     item.setText("voraussichtliches Lieferdatum")
     pw.tableWidget.setHorizontalHeaderItem(3, item)
-   
+    r = 0
     for i in range(len(parcel.best_parcel_options)):
         option = parcel.best_parcel_options[i]
         is_required = True
@@ -76,18 +78,17 @@ def show_best_options(parcel):
             if option.ps_name.lower() not in selected_services:   
                 is_required = False
         if is_required:
-            price_formatted = str(Decimal(option.price).quantize(Decimal('.01'), rounding=ROUND_UP))
-            pw.tableWidget.setItem(i,0, QTableWidgetItem(option.ps_name))
-            pw.tableWidget.setItem(i,1, QTableWidgetItem(option.name))
-            pw.tableWidget.setItem(i,2, QTableWidgetItem(str(price_formatted)))     	
-            pw.tableWidget.setItem(i,3, QTableWidgetItem(option.delivery_date.strftime("%d.%m.%Y")))
+            #price_formatted = str(Decimal(option.price).quantize(Decimal('.01'), rounding=ROUND_UP))
+            pw.tableWidget.setItem(r,0, QTableWidgetItem(option.ps_name))
+            pw.tableWidget.setItem(r,1, QTableWidgetItem(option.name))
+            pw.tableWidget.setItem(r,2, QTableWidgetItem(str(option.price)))     	
+            pw.tableWidget.setItem(r,3, QTableWidgetItem(option.delivery_date.strftime("%d.%m.%Y")))
+            r += 1
     pw.show()    
 
         
-def show_prices(parcel_service):
-    print("Here open window with all available services")
-    for p in parcel_services:
-        print(p)
+def show_prices():
+    p.show_prices(parcel_services)
 
 def close():
     w.destroy()

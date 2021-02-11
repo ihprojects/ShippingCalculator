@@ -53,9 +53,9 @@ class ParcelService():
         
     def add_best_option(self,parcel):      
         #teste ob wir versanoptionen für unser Paket nutzen können
+        lowest_price = 100000
+        best_parcel_option = None
         for option in self.parcel_options:
-            lowest_price = 100000
-            best_parcel_option = None
             is_valid = False
             if self.calc_type == "check_sides": 
                 if (parcel.sizes <= option.size_limit and 

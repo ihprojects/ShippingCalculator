@@ -32,4 +32,5 @@ def create_info_list(data):
     infos =[]
     for i in data:
         infos.append(i)
+
     return infos
