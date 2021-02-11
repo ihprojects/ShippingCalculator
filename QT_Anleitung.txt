@@ -1,3 +1,80 @@
+unterfenster display_prices.ui
+*******************************
+
+
+modales Fenster! 
+nicht verkleinerbar
+
+
+Überschrift:
+name= label_headline
+
+
+L:
+label_display_length
+display_lenght
+
+B:
+label_display_width
+display_width
+
+H:
+label_display_height
+display_height
+
+kg:
+label_display_weight
+display_weight
+
+
+
+
+*************************************
+*************************************
+Anleitung zur Qt Tqbelle:
+https://pythonspot.com/pyqt5-table/
+
+------------------
+Tabelle:
+name: tableWidget
+
+
+Um die Tabelle zu füllen:
+4 Spalten:
+Anbieter, Produkt, Preis, voraussichtl. Lieferdatum
+
+
+def createTable(self):
+       # Create table
+        self.tableWidget = QTableWidget()
+        self.tableWidget.setRowCount(4)                                 # Zeilenzahl = anzahl Anbieter + überschrift
+        self.tableWidget.setColumnCount(4)                              # sollten fest 4 Spalten sein
+
+    # Überschrift (erste Zeile row0
+        self.tableWidget.setItem(0,0, QTableWidgetItem("Anbieter"))
+        self.tableWidget.setItem(0,1, QTableWidgetItem("Produkt"))
+        self.tableWidget.setItem(0,2, QTableWidgetItem("Preis"))
+        self.tableWidget.setItem(0,3, QTableWidgetItem("voraussichtliches Lieferdatum"))
+
+
+        self.tableWidget.setItem(1,0, QTableWidgetItem("Cell (2,1)"))
+        self.tableWidget.setItem(1,1, QTableWidgetItem("Cell (2,2)"))
+        self.tableWidget.setItem(2,0, QTableWidgetItem("Cell (3,1)"))
+        self.tableWidget.setItem(2,1, QTableWidgetItem("Cell (3,2)"))
+        self.tableWidget.setItem(3,0, QTableWidgetItem("Cell (4,1)"))
+        self.tableWidget.setItem(3,1, QTableWidgetItem("Cell (4,2)"))
+        self.tableWidget.move(0,0)
+
+        # table selection change
+        self.tableWidget.doubleClicked.connect(self.on_click)
+
+
+
+
+
+
+
+**************************
 Importe:
 
 import sys

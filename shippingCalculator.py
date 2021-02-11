@@ -2,9 +2,12 @@
 import json
 from decimal import *
 from datetime import date, timedelta
-from parcelServiceOption import ParcelService, ParcelOption, Parcel
 
-SERVICES_FILE = "services.json"
+from parcelServiceOption import ParcelService, ParcelOption, Parcel
+from json_reader import get_newest, read_file, create_info_list
+
+SERVICES_FILE = "data.jsonl"
+TEST_FILE = "services.json"
      
 def create_parcel():
     """Erstellt ein neues Paket nach Eingaben"""
@@ -71,17 +74,29 @@ def draw_line(length = 70 ,char = '-'):
 def get_available_services():
     '''Load available services from json file
     and initialize list of parcel_services'''
+    available_services, update_at = get_newest(read_file(filename=SERVICES_FILE))
+    parcel_services = []
+    for service in available_services:
+        parcel_services.append(ParcelService(service))
+    return parcel_services
+
+def get_available_services_test():
+    '''Load available services from json file
+    and initialize list of parcel_services'''
     available_services = []   
-    with open(SERVICES_FILE, encoding='utf-8') as f:
+    with open(TEST_FILE, encoding='utf-8') as f:
         available_services = json.load(f)
     parcel_services = []
     for service in available_services:
         parcel_services.append(ParcelService(service))
     return parcel_services
         
+def get_price_services():
+    return get_available_services()
+
 #Hier beginnt das Programm
 if __name__ == '__main__':
-    parcel_services = get_available_services()
+    parcel_services = get_available_services_test()
     parcel = None
     print('Willkommen beim Versandrechner\n')
     print('Geben Sie einen Befehl oder help ein.')  

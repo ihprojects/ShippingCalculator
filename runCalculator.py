@@ -31,8 +31,8 @@ def calculate():
 def show_best_options(parcel):
     for i in parcel.best_parcel_options:
         price_formatted = str(Decimal(i.price).quantize(Decimal('.01'), rounding=ROUND_UP))
-    # TODO send to vk_rechner_main      
-    print(f"{i.ps_name:20}| {i.name:20}| {price_formatted:>10} €| {i.delivery_date}")
+        # TODO send to vk_rechner_main      
+        print(f"{i.ps_name:20}| {i.name:20}| {price_formatted:>10} €| {i.delivery_date}")
         
 def show_prices(parcel_service):
     print("Here open window with all available services")
