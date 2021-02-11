@@ -20,8 +20,8 @@ def crawl(target_file=DEFAULT_TARGET_FILE):
     process = CrawlerProcess(settings={"FEEDS": {target_file: {"format": "jsonlines"
                 ,"encoding":"utf8"},},})
     
+    # process.crawl('Hermes')
     for i in SPIDERS:
-        process.crawl(i)
         process.crawl(i)
         process.crawl(i)
     process.start()

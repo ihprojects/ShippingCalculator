@@ -3,7 +3,7 @@
 # Please refer to the documentation for information on how to create and manage
 # your spiders.
 import scrapy
-
+import sys
 
 #there are 5 types of spider classes in scrapy
 #scrapy Spider      we use this here so our spider class must inherit from this
@@ -31,7 +31,7 @@ class OptionsSpider(scrapy.Spider):
                 
                 
                 # 'option_name': option.xpath('.//b').extract_first()   #use . to limit scope to option selector
-               
+     
                 'option_name': option.xpath('.//text()').get()
                 ,'option_limits': option.xpath(f'//tr[{counter+1}]/td[1]/p[2]/text()').get()
                 ,'option_price': option.xpath(f'(//span[@class="text-primary"])[{counter}]/text()').get()
@@ -122,7 +122,7 @@ class HermesSpider(scrapy.Spider):
         try:
             values.append(float(newst))
         except:
-            pass
+            values.append('price not found')
         values.append(HermesSpider.DEFAULT_GIRTH_VALUE)
         return values
 
@@ -134,10 +134,10 @@ class HermesSpider(scrapy.Spider):
 
 #path in browser might be different as som browser add /tbody in xpath
         for option in response.xpath("//div[@id ='preistabelle_2']/table/tr"):  
-            lst.append(self.splitstr(option.xpath(".//td[@data-label='Paketklasse']/b/text()").get(), option.xpath(".//td[@data-label='Paketklasse']").get(), option.xpath('.//td[3]/text()').get()))
+            lst.append(self.splitstr(option.xpath(".//td[@data-label='Paketklasse']/b/text()").get(), option.xpath(".//td[@data-label='Paketklasse']").get(),option.xpath('.//td[4]/a/text()').get()))
         yield{
 
-                # 'uptdate': type(self),
+
                 'options' : lst
                 ,'calc_style': 'sum_sides'
                 ,'name': 'Hermes'
