@@ -136,11 +136,13 @@ class HermesSpider(scrapy.Spider):
         for option in response.xpath("//div[@id ='preistabelle_2']/table/tr"):  
             lst.append(self.splitstr(option.xpath(".//td[@data-label='Paketklasse']/b/text()").get(), option.xpath(".//td[@data-label='Paketklasse']").get(), option.xpath('.//td[3]/text()').get()))
         yield{
-        
+
+                # 'uptdate': type(self),
                 'options' : lst
                 ,'calc_style': 'sum_sides'
                 ,'name': 'Hermes'
                 ,'delivery_time': HermesSpider.DEFAULT_DELIVERY_TIME
+                
                    
  
         }
