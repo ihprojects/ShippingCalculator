@@ -6,30 +6,47 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.uic import *
 from PyQt5.QtWidgets import *
-from datetime import datetime
-from parcelServiceOption import ParcelService, ParcelOption, Parcel
+from datetime import datetime, date
 
-SERVICES_FILE = "services.json"
+from parcelServiceOption import ParcelService, ParcelOption, Parcel
+from json_reader import get_newest, read_file, create_info_list
+#from web2json import crawl
+
+SERVICES_FILE = "data.jsonl"
 
 def get_available_services():
     '''Load available services from json file
     and initialize list of parcel_services'''
-    available_services = []   
-    with open(SERVICES_FILE, encoding='utf-8') as f:
-        available_services = json.load(f)
+    available_services, update_at = get_newest(read_file(filename=SERVICES_FILE))
     parcel_services = []
     for service in available_services:
         parcel_services.append(ParcelService(service))
     return parcel_services
 
+def update_services():
+    crawl()
+
 def calculate():
-    parcel = Parcel([int(w.inp_length.text()), int(w.inp_width.text()), int(w.inp_height.text())], int(w.inp_weight.text()))
+    dd = w.dateEdit_delDate.date().toPyDate()
+    parcel = Parcel([int(w.inp_length.text()), int(w.inp_width.text()), int(w.inp_height.text())], int(w.inp_weight.text()), dd)
     for service in parcel_services:
         service.add_best_option(parcel)          
     show_best_options(parcel)
 
 
 def show_best_options(parcel):
+    while (pw.tableWidget.rowCount() > 0):
+        pw.tableWidget.removeRow(0)
+    selected_services = []
+    if w.checkBox_dhl.isChecked():
+        selected_services.append("dhl")
+    
+    if w.checkBox_hermes.isChecked():
+        selected_services.append("hermes")
+    
+    if w.checkBox_dpd.isChecked():
+        selected_services.append("dpd")
+    
     pw.display_length.setText(str(parcel.sizes[0]))
     pw.display_width.setText(str(parcel.sizes[1]))
     pw.display_height.setText(str(parcel.sizes[2]))
@@ -51,22 +68,19 @@ def show_best_options(parcel):
     item = QTableWidgetItem()
     item.setText("voraussichtliches Lieferdatum")
     pw.tableWidget.setHorizontalHeaderItem(3, item)
-    
-    # pw.tableWidget.setItem(0,0, QTableWidgetItem("Anbieter"))
-    # pw.tableWidget.setItem(0,1, QTableWidgetItem("Produkt"))
-    # pw.tableWidget.setItem(0,2, QTableWidgetItem("Preis"))
-    # pw.tableWidget.setItem(0,3, QTableWidgetItem("voraussichtliches Lieferdatum"))
    
     for i in range(len(parcel.best_parcel_options)):
-    #for i in parcel.best_parcel_options:
         option = parcel.best_parcel_options[i]
-        price_formatted = str(Decimal(option.price).quantize(Decimal('.01'), rounding=ROUND_UP))
-        #print(f"{i.ps_name:20}| {i.name:20}| {price_formatted:>10} €| {i.delivery_date}")
-        pw.tableWidget.setItem(i,0, QTableWidgetItem(option.ps_name))
-        pw.tableWidget.setItem(i,1, QTableWidgetItem(option.name))
-        pw.tableWidget.setItem(i,2, QTableWidgetItem(str(price_formatted)))
-        	
-        pw.tableWidget.setItem(i,3, QTableWidgetItem(option.delivery_date.strftime("%d.%m.%Y")))
+        is_required = True
+        if selected_services: 
+            if option.ps_name.lower() not in selected_services:   
+                is_required = False
+        if is_required:
+            price_formatted = str(Decimal(option.price).quantize(Decimal('.01'), rounding=ROUND_UP))
+            pw.tableWidget.setItem(i,0, QTableWidgetItem(option.ps_name))
+            pw.tableWidget.setItem(i,1, QTableWidgetItem(option.name))
+            pw.tableWidget.setItem(i,2, QTableWidgetItem(str(price_formatted)))     	
+            pw.tableWidget.setItem(i,3, QTableWidgetItem(option.delivery_date.strftime("%d.%m.%Y")))
     pw.show()    
 
         
@@ -86,11 +100,15 @@ if __name__ == '__main__':
     w = loadUi("vk_rechner_main.ui")            # Laden des Hauptfenster (main)
     w.but_calculate.clicked.connect(calculate)
     w.but_pricelist.clicked.connect(show_prices)
+    w.but_update.clicked.connect(update_services)
     w.but_close.clicked.connect(close)
+    
+    # date time 
+    d = QDateTime(date.today().year, date.today().month, date.today().day, 0, 0) 
+    
+    # setting date time 
+    w.dateEdit_delDate.setDateTime(d)
     w.show()                                    # Anzeige des Fensters
-    
-    pw = loadUi("display_prices.ui") 
-    
-
+    pw = loadUi("display_prices.ui")    
     sys.exit(app.exec_())                       # Applikation starten
 
