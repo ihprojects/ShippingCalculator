@@ -1,65 +1,85 @@
 import tkinter as tk
+import json_reader 
+import parcelServiceOption
+data = json_reader.read_file()
 
-win = tk.Tk()
-fr_greet = tk.Frame(height=100)
-greeting = tk.Label(text='Willkommen beim Pizza Haus',master = fr_greet)
-greeting.grid(pady = 20)
-fr_greet.grid(sticky='ns')
+new_data ,update_from = json_reader.get_newest(data)
+parcelservices = []
+lst = json_reader.create_info_list(new_data)
+for i in lst:
+    parcelservices.append(parcelServiceOption.ParcelService(i))
 
-
-
-fr_pay= tk.Frame()
-lbl1 = tk.Label(text= 'Bitte stellen Sie Ihre Wunschpizza zusammen', master = fr_pay)
-lbl1.grid()
-
-
-PAY_OPTIONS =['Barzahlung','Sofortüberweisung']
-str_var = tk.StringVar(win)
-str_var.set(PAY_OPTIONS[0]) #default value
-
-drp_menu = tk.OptionMenu(fr_pay,str_var,*PAY_OPTIONS)
-drp_menu.grid()
+ps =parcelservices[1]
 
 
 
-
-def ok():
-    print(f'sie haben {str_var.get()} ausgewaehlt')
-
-btn_ok = tk.Button(master = fr_pay,text = 'OK',command = ok)
-btn_ok.grid()
-
-fr_order = tk.Frame()
-PIZZA_OPTIONS = ['Salami','Thunfisch','extra Käse','Schinken','Pilze','Artischocken']
-
-btns_PIZZA_OPTONS =[]
-j=0
-for i in range(len(PIZZA_OPTIONS)):
-    btns_PIZZA_OPTONS.append(tk.Checkbutton(master=fr_order,text =PIZZA_OPTIONS[i]))
-    if i<len(PIZZA_OPTIONS)//2:
-        btns_PIZZA_OPTONS[i].grid(row =i,column=1)
-    else:
-        btns_PIZZA_OPTONS[i].grid(row =j,column=2)
-        j+=1
-
-orders = []
-def get_button_states():
-    buttons = btns_PIZZA_OPTONS
-    for i in buttons:
-        if i.get():
-            orders.append(i)
-    for i in orders:
-        print(i.text)
-
-btn_confirm = tk.Button(master= fr_order,text='Bestellung bestätigen',command=get_button_states)
-btn_confirm.grid()
+# border_effects = {
+#     "flat": tk.FLAT,
+#     "sunken": tk.SUNKEN,
+#     "raised": tk.RAISED,
+#     "groove": tk.GROOVE,
+#     "ridge": tk.RIDGE,
+# }
 
 
-
-fr_order.grid()
-fr_pay.grid()
+# for relief_name, relief in border_effects.items():
+#     frame = tk.Frame(master=window, relief=relief, borderwidth=5)
+#     frame.pack(side=tk.LEFT)
+#     label = tk.Label(master=frame, text=relief_name)
+#     label.pack()
 
 
 
 
-win.mainloop()
+def get_strsize_limit(size_limit):
+    limits=[]
+    for i in size_limit:
+        if i!= 1000:
+            limits.append(i)
+    text ='max Länge '
+    counter = 0
+    for i in limits: 
+        text += str(i)
+        text+='cm '
+        # if len(limits)
+    return text
+
+
+def show_prices(parcelServices):
+    win = tk.Tk()
+    fr_greet = tk.Frame(height=100)
+    greeting = tk.Label(text='Preisliste',master = fr_greet,font=(None, 20))
+    greeting.grid(pady = 20)
+    fr_greet.grid(sticky='ns')
+
+
+
+    fr_packages =tk.Frame( borderwidth=5)
+    row=1
+    for i in parcelServices:
+        col =0
+        counter =0
+        is_first_row=True
+        fr = tk.Frame(relief=tk.GROOVE, borderwidth=5,bg="#dcddd8")
+        lbl = tk.Label(text=f'{i.name}',master = fr,font=(None, 15),bg="#dcddd8")
+        lbl.grid(row=0,column=0,sticky='w')
+        for j in i.parcel_options:
+            fr_small = tk.Frame(relief=tk.GROOVE, borderwidth=5,master=fr)
+            lbl_title = tk.Label(text=f'{j.name}',master = fr_small,bg='white',font=(None, 12))
+            lbl = tk.Label(text=f'{get_strsize_limit(j.size_limit)}\nbis {j.weight_limit} kg',master = fr_small,bg='white',font=(None, 10))
+            lbl_price = tk.Label(text=f'{j.price} €',master = fr_small,bg='white',font=(None, 12))
+            lbl_title.grid(row=0)
+            lbl.grid(row=1)
+            lbl_price.grid(row=2)
+            fr_small.grid(row =row,column=col,sticky ='we')
+            col+=1
+
+            counter+=1
+        fr.grid(sticky ='we',column=0)
+
+    fr_packages.grid()
+    win.mainloop()
+
+
+if __name__ == '__main__':
+    show_prices(parcelservices)

@@ -27,17 +27,10 @@ def get_newest(data):
             return data[idx+1:], i['time']
         idx-=1
     return data , None
-def get_newest_idx(data):
-    idx =len(data)-1
-    for i in data[::-1]:
-        if 'time' in i:
-            return idx+1
-        idx-=1
-    return 0
-
 
 def create_info_list(data):
     infos =[]
     for i in data:
         infos.append(i)
+
     return infos
