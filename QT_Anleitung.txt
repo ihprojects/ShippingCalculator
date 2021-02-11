@@ -1,0 +1,81 @@
+Importe:
+
+import sys
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.uic import *
+from PyQt5.QtWidgets import *
+from shippingCalculator import *
+
+app = QApplication(sys.argv)                # 
+w = loadUi("vk_rechner_main.ui")            # Laden des Hauptfenster (main)
+
+w.show()                                    # Anzeige des Fensters
+sys.exit(app.exec_())                       # Applikation starten
+
+
+
+
+Versanddatum auf Tagesdatum setzen:
+***********************************
+ 
+        # date time 
+        d = QDateTime(2020, 10, 10, 10, 20) 
+  
+        # setting date time 
+        dateEdit_delDate.setDateTime(d) 
+
+
+
+Menü-Einträge:
+**************
+Preis berechnen:            menuPreis_berechnen
+Preisliste                  menuPreisliste
+Preis ...
+    - auf Updates prüfen    actionAuf_Updatestes_pruefen
+    - Aktualisieren         actionAktualisieren
+
+Alternativen anzeigen       menuAlternativen_anzeigen 
+
+
+Eingabefelder:
+**************
+
+Länge       inp_length
+Breite      inp_width
+Höhe        inp_height
+Gewicht     inp_weight
+
+
+Checkboxen:
+***********
+DHL         checkBox_dhl
+Hermes      checkBox_hermes
+DPD         checkBox_hermes
+
+Versicherung    checkBox_insurance
+Expressversand  checkBox_express
+
+Datum:
+******
+gewünschtes Lieferdatum     dateEdit_delDate
+
+
+Buttons:
+********
+Preis berechnen     but_calculate
+w.connect(w.but_calculate, SIGNAL("clicked()"), FUNKTIONSAUFRUF_ohne_Klammern)
+
+Preisliste          but_pricelist
+w.connect(w.but_pricelist, SIGNAL("clicked()"), FUNKTIONSAUFRUF_ohne_Klammern)
+
+Alternativen        but_alternate
+w.connect(w.but_alternate, SIGNAL("clicked()"), FUNKTIONSAUFRUF_ohne_Klammern)
+
+Beenden             but_close
+w.connect(w.but_close, SIGNAL("clicked()"),show_help)
+
+
+
+
+
