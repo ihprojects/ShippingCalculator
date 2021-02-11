@@ -31,11 +31,12 @@ def crawl(target_file=DEFAULT_TARGET_FILE,init = False):
             process.crawl(SPIDERS[i])
             
 
-     #add timestamp
-    time = {'time': datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S")}
-    with open(target_file, 'a') as f:
-        json.dump(time,f)
-        f.write('\n')
+    #add timestamp
+    if init == False:
+        time = {'time': datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S")}
+        with open(target_file, 'a') as f:
+            json.dump(time,f)
+            f.write('\n')
 
        
     process.start()
@@ -48,4 +49,4 @@ def crawl(target_file=DEFAULT_TARGET_FILE,init = False):
 
 
 if __name__ == '__main__':
-    crawl(init =False)
+    crawl(init = False)
