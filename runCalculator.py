@@ -10,7 +10,7 @@ from datetime import datetime, date
 
 from parcelServiceOption import ParcelService, ParcelOption, Parcel
 from json_reader import get_newest, read_file, create_info_list
-#from web2json import crawl
+from web2json import crawl
 
 SERVICES_FILE = "data.jsonl"
 
@@ -25,6 +25,7 @@ def get_available_services():
 
 def update_services():
     crawl()
+    get_available_services()
 
 def calculate():
     dd = w.dateEdit_delDate.date().toPyDate()

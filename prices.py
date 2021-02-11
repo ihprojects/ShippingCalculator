@@ -38,10 +38,11 @@ def get_strsize_limit(size_limit):
             limits.append(i)
     text ='max Länge '
     counter = 0
-    for i in limits: 
-        text += str(i)
-        text+='cm '
-        # if len(limits)
+    if len(limits) > 0:
+        for i in limits: 
+            text += str(i)
+            text+='cm '
+
     return text
 
 
