@@ -28,7 +28,7 @@ def calculate():
         service.add_best_option(parcel)          
     show_best_options(parcel)
 
-def show_best_options():
+def show_best_options(parcel):
     for i in parcel.best_parcel_options:
         price_formatted = str(Decimal(i.price).quantize(Decimal('.01'), rounding=ROUND_UP))
     # TODO send to vk_rechner_main      
