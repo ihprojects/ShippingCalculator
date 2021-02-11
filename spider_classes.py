@@ -13,38 +13,64 @@ import sys
 #sitemap spider
 
 
-class OptionsSpider(scrapy.Spider):
+class DHLSpider(scrapy.Spider):
     name = 'DHL' #use to run: scrapy crawl thisname
 
     start_urls = [
         'https://www.dhl.de/de/privatkunden/pakete-versenden/deutschlandweit-versenden/preise-national.html'
     ]
+    DEFAULT_DELIVERY_TIME =2
+    DEFAULT_GIRTH_VALUE = 1000
+
+    def update_dhl(self,name_gewicht, dimensionen, preis):
+       
+        asd = []
+        
+        gewichts = name_gewicht
+        klassenname = [g2 for g2 in gewichts.replace(',','.').split()]
+        kln = f'{klassenname[0]} {klassenname[1]} {klassenname[2]} {klassenname[3]}'
+        asd.append(kln)
+
+        limits = dimensionen
+        dim1 = [int(d) for d in limits.split() if d.isdigit()] 
+        asd.append(dim1)
+
+        gewicht1 = [g for g in gewichts.replace(',','.').split() if g.isdigit]
+        for g1 in gewicht1:
+            if g1.isdigit():
+                g1 = int(g1)
+            else:
+                g1 = float(gewicht1[-2]) 
+        asd.append(g1)
+    
+        prs = preis
+        prs1 = [p for p in prs.replace(',','.').split()]
+        p1 = float(prs1[0])
+        asd.append(p1)
+        asd.append(DHLSpider.DEFAULT_GIRTH_VALUE)
+            
+        return asd
+
+
 
     def parse(self,response):
-        counter =1
-        # yield{response.xpath('//tbody')}
-        # for option in response.xpath('(/html/body/div[4]/div[3]/div/div/div[1]/div/div[2]/table/tbody/tr)'):
-        for option in response.xpath('//td[1]/p[1]/b'):
-            counter = counter
             
-            yield{
-                
-                
-                # 'option_name': option.xpath('.//b').extract_first()   #use . to limit scope to option selector
-     
-                'option_name': option.xpath('.//text()').get()
-                ,'option_limits': option.xpath(f'//tr[{counter+1}]/td[1]/p[2]/text()').get()
-                ,'option_price': option.xpath(f'(//span[@class="text-primary"])[{counter}]/text()').get()
-                
+        lst1 =[]
+        counter =1
+    #path in browser might be different as som browser add /tbody in xpath
+        for option in response.xpath('//td[1]/p[1]/b'):  
+            lst1.append(self.update_dhl(option.xpath('.//text()').get(), option.xpath(f'//tr[{counter+1}]/td[1]/p[2]/text()').get(), option.xpath(f'(//span[@class="text-primary"])[{counter}]/text()').get()))
+            counter+=1
+        yield{
+                'update' : DHLSpider.name
+                ,'options' : lst1
+                ,'calc_style': 'check_sides'
+                ,'name': 'DHL'
+                ,'delivery_time': DHLSpider.DEFAULT_DELIVERY_TIME
+                    
+    
             }
-            counter = counter
-            counter +=1
 
-        # next_page = response.xpath('//li[@class="next"]/a/@href').extract_first()
-        # if next_page is not None:
-        #     next_page_link=response.urljoin(next_page)
-
-        # yield scrapy.Request(url = next_page_link, callback=self.parse)
 
 class HermesSpider(scrapy.Spider):
     name = 'Hermes' #use to run: scrapy crawl thisname
@@ -134,15 +160,15 @@ class HermesSpider(scrapy.Spider):
 
 #path in browser might be different as som browser add /tbody in xpath
         for option in response.xpath("//div[@id ='preistabelle_2']/table/tr"):  
-            lst.append(self.splitstr(option.xpath(".//td[@data-label='Paketklasse']/b/text()").get(), option.xpath(".//td[@data-label='Paketklasse']").get(),option.xpath('.//td[4]/a/text()').get()))
+            lst.append(self.splitstr(option.xpath(".//td[@data-label='Paketklasse']/b/text()").get()
+            , option.xpath(".//td[@data-label='Paketklasse']").get()
+            ,option.xpath('.//td[4]/a/text()').get()))
         yield{
 
-
-                'options' : lst
-                ,'calc_style': 'sum_sides'
+                'update' : HermesSpider.name
+                ,'options' : lst
+                ,'calc_style': "check_sum"
                 ,'name': 'Hermes'
                 ,'delivery_time': HermesSpider.DEFAULT_DELIVERY_TIME
                 
-                   
- 
         }
