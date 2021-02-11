@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import json
 from decimal import *
 from datetime import date, timedelta
@@ -96,7 +95,7 @@ def get_price_services():
 
 #Hier beginnt das Programm
 if __name__ == '__main__':
-    parcel_services = get_available_services_test()
+    parcel_services = get_available_services()
     parcel = None
     print('Willkommen beim Versandrechner\n')
     print('Geben Sie einen Befehl oder help ein.')  
