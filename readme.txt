@@ -31,15 +31,24 @@ UPS.de	€ 6,55 / 8,33 / 17,85
 
 Scrapy install notes
 1. create venv:
-python -m venv name
-2.activate in scripts
+python -m venv myname
+
+2. change active directory to myname/Scripts and call activate in scripts
 ./activate
+
+if it's not allowed then execute in cmd
+set-executionpolicy remotesigned
+
 3. try install scrapy:
 pip install scrapy
+
 if error installing twisted:
-1.download twisted whl
+- download twisted whl to virtualenv\Twisted-20.3.0-cp39-cp39-win_amd64.whl
 pip install yourwhlfile
 pip install scrapy
+
+also install PyQt5:
+pip install PyQt5
 
 4.get requirements:
 pip freeze > requirements.txt

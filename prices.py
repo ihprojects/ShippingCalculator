@@ -9,10 +9,6 @@ lst = json_reader.create_info_list(new_data)
 for i in lst:
     parcelservices.append(parcelServiceOption.ParcelService(i))
 
-ps =parcelservices[1]
-
-
-
 # border_effects = {
 #     "flat": tk.FLAT,
 #     "sunken": tk.SUNKEN,
@@ -21,23 +17,12 @@ ps =parcelservices[1]
 #     "ridge": tk.RIDGE,
 # }
 
-
-# for relief_name, relief in border_effects.items():
-#     frame = tk.Frame(master=window, relief=relief, borderwidth=5)
-#     frame.pack(side=tk.LEFT)
-#     label = tk.Label(master=frame, text=relief_name)
-#     label.pack()
-
-
-
-
 def get_strsize_limit(size_limit):
     limits=[]
     for i in size_limit:
         if i!= 1000:
             limits.append(i)
     text ='max Länge '
-    counter = 0
     for i in limits: 
         text += str(i)
         text+='cm '
@@ -51,15 +36,11 @@ def show_prices(parcelServices):
     greeting = tk.Label(text='Preisliste',master = fr_greet,font=(None, 20))
     greeting.grid(pady = 20)
     fr_greet.grid(sticky='ns')
-
-
-
     fr_packages =tk.Frame( borderwidth=5)
     row=1
     for i in parcelServices:
         col =0
         counter =0
-        is_first_row=True
         fr = tk.Frame(relief=tk.GROOVE, borderwidth=5,bg="#dcddd8")
         lbl = tk.Label(text=f'{i.name}',master = fr,font=(None, 15),bg="#dcddd8")
         lbl.grid(row=0,column=0,sticky='w')
