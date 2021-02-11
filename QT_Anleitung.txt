@@ -1,3 +1,64 @@
+unterfenster display_pricelist.ui
+*******************************
+object name: display_pricelist
+
+Überschrift:
+label: pricelist_label_headline
+
+OK-Button:
+name: pricelist_button_Box
+
+Table Widget:
+name: pricelist_tableview
+
+
+
+
+DHL
+=========================================
+Päcken S    | Päckchen M | evtl weitere Spalten?
+2 kg        | 2 kg       | 
+35x25x10 cm | 50x30x25   | 
+
+DPD
+=========================================
+XS          | S          | M
+no limit    | no limit   | no limit
+35 cm       | 50 cm      | 70 cm
+3,90 €      | 4,20 €     | 6,60 €
+
+
+
+
+# Beispielhaft die ersten zeilen:
+        self.tableWidget.setItem(0,0, QTableWidgetItem("DHL"))
+        self.tableWidget.setItem(1,0, QTableWidgetItem("========="))
+        self.tableWidget.setItem(2,0, QTableWidgetItem("Päckchen S"))
+        self.tableWidget.setItem(2,1, QTableWidgetItem("Päckchen M"))
+        self.tableWidget.setItem(2,2, QTableWidgetItem("Päckchen evtl mehr"))
+
+        self.tableWidget.setItem(3,0, QTableWidgetItem("2 kg"))
+        self.tableWidget.setItem(3,1, QTableWidgetItem("2 kg"))
+
+
+        self.tableWidget.setItem(4,0, QTableWidgetItem("35x25x10 cm "))
+        self.tableWidget.setItem(4,1, QTableWidgetItem("50x30x25 cm"))
+
+
+
+
+        self.tableWidget.setItem(0,3, QTableWidgetItem("voraussichtliches Lieferdatum"))
+
+
+        self.tableWidget.setItem(1,0, QTableWidgetItem("Cell (2,1)"))
+        self.tableWidget.setItem(1,1, QTableWidgetItem("Cell (2,2)"))
+        self.tableWidget.setItem(2,0, QTableWidgetItem("Cell (3,1)"))
+        self.tableWidget.setItem(2,1, QTableWidgetItem("Cell (3,2)"))
+        self.tableWidget.setItem(3,0, QTableWidgetItem("Cell (4,1)"))
+        self.tableWidget.setItem(3,1, QTableWidgetItem("Cell (4,2)"))
+
+
+****************************************************************************************
 unterfenster display_prices.ui
 *******************************
 

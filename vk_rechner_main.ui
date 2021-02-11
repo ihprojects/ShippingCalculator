@@ -23,10 +23,10 @@
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>310</y>
-      <width>581</width>
-      <height>81</height>
+      <x>150</x>
+      <y>360</y>
+      <width>631</width>
+      <height>41</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -51,18 +51,6 @@
        </property>
        <property name="text">
         <string>Preisliste</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="but_alternate">
-       <property name="font">
-        <font>
-         <pointsize>14</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Alternativen</string>
        </property>
       </widget>
      </item>
@@ -136,6 +124,9 @@
        <property name="inputMethodHints">
         <set>Qt::ImhPreferNumbers</set>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
       </widget>
      </item>
      <item row="1" column="0">
@@ -177,6 +168,9 @@
        </property>
        <property name="inputMethodHints">
         <set>Qt::ImhPreferNumbers</set>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -229,6 +223,9 @@
        <property name="inputMethodHints">
         <set>Qt::ImhPreferNumbers</set>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
       </widget>
      </item>
      <item row="6" column="0">
@@ -273,6 +270,9 @@
        </property>
        <property name="inputMethodHints">
         <set>Qt::ImhPreferNumbers</set>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -352,6 +352,9 @@
        <property name="text">
         <string>DHL</string>
        </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -364,6 +367,9 @@
        <property name="text">
         <string>Hermes</string>
        </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -375,6 +381,9 @@
        </property>
        <property name="text">
         <string>DPD</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -473,15 +482,9 @@
     <addaction name="actionAuf_Updatestes_pruefen"/>
     <addaction name="actionAktualisieren"/>
    </widget>
-   <widget class="QMenu" name="menuAlternativen_anzeigen">
-    <property name="title">
-     <string>Alternativen anzeigen</string>
-    </property>
-   </widget>
    <addaction name="menuPreis_berechnen"/>
    <addaction name="menuPreisliste"/>
    <addaction name="menuPreise_aktualisieren"/>
-   <addaction name="menuAlternativen_anzeigen"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionAuf_Updatestes_pruefen">
@@ -495,6 +498,20 @@
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>inp_length</tabstop>
+  <tabstop>inp_width</tabstop>
+  <tabstop>inp_height</tabstop>
+  <tabstop>inp_weight</tabstop>
+  <tabstop>checkBox_dhl</tabstop>
+  <tabstop>checkBox_hermes</tabstop>
+  <tabstop>checkBox_dpd</tabstop>
+  <tabstop>checkBox_insurance</tabstop>
+  <tabstop>checkBox_express</tabstop>
+  <tabstop>dateEdit_delDate</tabstop>
+  <tabstop>but_calculate</tabstop>
+  <tabstop>but_pricelist</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
