@@ -62,8 +62,7 @@ class HermesSpider(scrapy.Spider):
 
 #name needs no parsing
         values.append(name)
-        
-        
+                
         st_list = st.split('<br>')[1].split('kg')[0].split('cm')
         #st now looks like one of these:
         #["Längste + kürzeste Seite 120,1 bis 150 ", ", max. 31,5 "]
