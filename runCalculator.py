@@ -25,10 +25,13 @@ def get_available_services():
     return parcel_services
 
 def update_services():
+    '''Read service information from internet
+    and fill in correct structure'''
     crawl()
     get_available_services()
 
 def calculate():
+    ''' Calculate best prices'''
     dd = w.dateEdit_delDate.date().toPyDate()
     parcel = Parcel([int(w.inp_length.text()), int(w.inp_width.text()), int(w.inp_height.text())], int(w.inp_weight.text()), dd)
     for service in parcel_services:
@@ -37,6 +40,7 @@ def calculate():
 
 
 def show_best_options(parcel):
+    '''Display window with best prices for parcel'''
     while (pw.tableWidget.rowCount() > 0):
         pw.tableWidget.removeRow(0)
     selected_services = []
@@ -88,6 +92,7 @@ def show_best_options(parcel):
 
         
 def show_prices():
+    '''Call window and display all services and their prices'''
     p.show_prices(parcel_services)
 
 def close():
